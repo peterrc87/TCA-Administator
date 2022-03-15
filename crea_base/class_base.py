@@ -18,7 +18,7 @@ class Base():
 		self.conexion = sqlite3.connect("grupos.db")
 		self.cursor = self.conexion.cursor()
 		
-		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement  , tele varchar(11) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), admin varchar(200))")
+		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement  , tele integer unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), admin varchar(200))")
 		print("se creó la tabla miembros")
 		
 		self.conexion.close()
@@ -33,14 +33,10 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			try:
-				if len(self.text1.GetValue()) == 11:
-					self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
-					self.conexion.commit()
-				else:
-					wx.MessageBox("Debe introducir un número de 11 dígitos")
-			except:
-				wx.MessageBox("no puede introducir un número de teléfono ya existente")
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+			self.conexion.commit()
+				
+			
 
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
