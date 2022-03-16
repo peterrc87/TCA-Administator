@@ -2,10 +2,9 @@
 import sqlite3
 import wx
 import os, winsound 
-import locale, datetime
 version="1.0"
-locale.setlocale(locale.LC_ALL, "es")
 from crea_base import class_base as tb 
+from popmenu import pmenu_func as tm
 
 class TCA_admin(wx.Frame):
 	def __init__(self, parent, title):
@@ -25,14 +24,15 @@ class TCA_admin(wx.Frame):
 		self.text1 = wx.TextCtrl(p1, -1, "")
 		st2 = wx.StaticText(p1, -1, "&Nómbre integrante")
 		self.text2 = wx.TextCtrl(p1, -1, "")
-		self.bt2 = wx.Button(p1, -1, "A&ñadir")
-		self.Bind(wx.EVT_BUTTON, self.añadir_base, self.bt2)
+		self.bt2 = wx.Button(p1, -1, "A&cciones")
+		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
 		self.lista = wx.ListBox(p1)
 		self.lista.Disable()
 		self.bt = wx.Button(p1, -1, "&Mostrar")
 		self.Bind(wx.EVT_BUTTON, self.mostrar, self.bt)
 		self.it_cho_a = None
-		#self.Bind(wx.EVT_TEXT_ENTER, self.añadir_base, self.text1)
+		#llamamos a la creación del menu.
+		tm.create_menu(self)
 		self.Centre(True)
 		self.Show()
 		
@@ -53,6 +53,22 @@ class TCA_admin(wx.Frame):
 	
 	def contar(self, event):
 		tb.Base.contar(self)
+	
+	
+	def añadir_falta(self, event):
+		if self.text1.GetValue() and self.it_cho_a != None:
+			tb.Base.faltas(self)
+			
+		else:
+			pass
+
+		
+	#método para el poppup 
+	def ac_menu(self, event):
+		ps = self.bt2.GetPosition()
+		self.PopupMenu(self.p_menu, ps)
+		print("en ps hay: ", ps)
+
 		
 if __name__ == "__main__":
 	root= wx.App()

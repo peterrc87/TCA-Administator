@@ -18,8 +18,10 @@ class Base():
 		self.conexion = sqlite3.connect("grupos.db")
 		self.cursor = self.conexion.cursor()
 		
-		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement  , tele integer unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), admin varchar(200))")
+		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tele integer unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), admin varchar(200))")
 		print("se creó la tabla miembros")
+		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas integer not null, fecha varchar(100), admin varchar(100), foreign key(n_faltas) references miembros(tel))")		
+		print("se acaba de crear la segunda tabla faltas")
 		
 		self.conexion.close()
 	#los métodos de la clase:
@@ -35,8 +37,6 @@ class Base():
 		else:
 			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
 			self.conexion.commit()
-				
-			
 
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
@@ -60,3 +60,19 @@ class Base():
 
 		self.text1.SetLabel("el número de miembros en la base de datos es: {}".format(len(self.mi)))
 		self.text1.SetFocus()
+		
+	@co
+	def faltas(self):
+		dt = datetime.datetime.now()
+
+		try:
+			eval(self.text1.GetValue())*0
+		except:
+			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
+		else:
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+
+			self.conexion.commit()
+
+		self.text1.SetLabel("")
+		self.text2.SetLabel("")
