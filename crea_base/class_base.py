@@ -97,5 +97,7 @@ class Base():
 		self.cursor.execute("select * from miembros")
 		t_mi = self.cursor.fetchall()
 		for i in t_mi:
-			self.lista.Append("{} TLF: {} Fecha de ingreso: {} ".format(str(i[2]), str(i[1]), str(i[-2]), ))
+			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
+			u = self.cursor.fetchall()
+			self.lista.Append("{} TLF: {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[2]), str(i[1]), str(i[-2]), len(u)))
 		self.lista.SetFocus()
