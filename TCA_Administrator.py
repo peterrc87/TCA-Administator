@@ -31,6 +31,7 @@ class TCA_admin(wx.Frame):
 		self.bt = wx.Button(p1, -1, "&Mostrar")
 		self.Bind(wx.EVT_BUTTON, self.mostrar, self.bt)
 		self.it_cho_a = None
+		#self.num_faltas = "0"
 		#llamamos a la creación del menu.
 		tm.create_menu(self)
 		self.Centre(True)
@@ -52,7 +53,7 @@ class TCA_admin(wx.Frame):
 		tb.Base.mostrar(self)
 	
 	def contar(self, event):
-		tb.Base.contar(self)
+		tb.Base.contar_f(self)
 	
 	
 	def añadir_falta(self, event):
