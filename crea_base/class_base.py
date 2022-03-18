@@ -19,7 +19,13 @@ def contar_f(self):
 	#contará el número de miembros en la base de  datos.
 	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
 	self.num_faltas=self.cursor.fetchall()
-	return self.num_faltas
+	#self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
+	#self.mi_falta = self.cursor.fetchone()
+	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue()))
+	self.mi = self.cursor.fetchone()
+	return self.num_faltas, self.mi
+
+	
 
 
 #creo la clase.
@@ -62,11 +68,11 @@ class Base():
 		contar_f(self)
 		print(self.num_faltas)
 		print("hay en la tabla faltas {}".format(len(self.num_faltas)))
-		#self.num_faltas
-		self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue()))
-		self.mi = self.cursor.fetchall()
-		for i in self.mi:
-			self.lista.Append(str(i)+" faltas totales: {}".format(len(self.num_faltas)))
+		
+		#for j in self.mi:
+		#self.lista.Append(str(i)+" faltas totales: {}".format(len(self.num_faltas)))
+		for usu in self.num_faltas:
+			self.lista.Append("{} TLF: {} {} Fecha: {} Total faltas: {}".format(str(self.mi[2]), str(self.mi[1]), usu[-1], usu[-2], len(self.num_faltas)))
 		self.lista.SetFocus()
 	
 		
@@ -85,3 +91,11 @@ class Base():
 
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
+	@co
+	def mostrar_tm(self):
+		#contar_f(self)
+		self.cursor.execute("select * from miembros")
+		t_mi = self.cursor.fetchall()
+		for i in t_mi:
+			self.lista.Append("{} TLF: {} Fecha de ingreso: {} ".format(str(i[2]), str(i[1]), str(i[-2]), ))
+		self.lista.SetFocus()

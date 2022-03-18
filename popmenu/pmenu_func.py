@@ -7,4 +7,10 @@ def create_menu(self):
 	self.it_falta = self.p_menu.Append(-1, "Añadir falta")
 	self.Bind(wx.EVT_MENU, self.añadir_falta, self.it_falta)
 	self.it_el = self.p_menu.Append(-1, "Eliminar integrante")
-	self.it_fal = self.p_menu.Append(-1, "Número de faltas")
+	
+	#ahora el otro popup para el botón 2.
+	self.p2_menu = wx.Menu()
+	it_c_fal = self.p2_menu.Append(-1, "Consultar faltas")
+	self.Bind(wx.EVT_MENU, self.mostrar, it_c_fal)
+	it_tm = self.p2_menu.Append(-1, "Mostrar todos los miembros")
+	self.Bind(wx.EVT_MENU, self.mostrar_tm, it_tm)

@@ -28,8 +28,8 @@ class TCA_admin(wx.Frame):
 		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
 		self.lista = wx.ListBox(p1)
 		self.lista.Disable()
-		self.bt = wx.Button(p1, -1, "&Mostrar")
-		self.Bind(wx.EVT_BUTTON, self.mostrar, self.bt)
+		self.bt = wx.Button(p1, -1, "C&onsultas")
+		self.Bind(wx.EVT_BUTTON, self.ac_menu2, self.bt)
 		self.it_cho_a = None
 		#self.num_faltas = "0"
 		#llamamos a la creación del menu.
@@ -52,9 +52,6 @@ class TCA_admin(wx.Frame):
 		self.lista.Clear()
 		tb.Base.mostrar(self)
 	
-	def contar(self, event):
-		tb.Base.contar_f(self)
-	
 	
 	def añadir_falta(self, event):
 		if self.text1.GetValue() and self.it_cho_a != None:
@@ -64,11 +61,24 @@ class TCA_admin(wx.Frame):
 			pass
 
 		
-	#método para el poppup 
+	#método para el poppup1 
 	def ac_menu(self, event):
+		
 		ps = self.bt2.GetPosition()
-		self.PopupMenu(self.p_menu, ps)
-		print("en ps hay: ", ps)
+		self.PopupMenu(self.p_menu, ps)		
+		
+	#popup menu para el botón 2.
+	def ac_menu2(self, event):
+		ps2 = self.bt.GetPosition()
+		self.PopupMenu(self.p2_menu, ps2)
+	
+	#método para mostrar todos los miembros.
+	def mostrar_tm(self, event):
+		self.lista.Clear()
+		self.lista.Enable()
+		tb.Base.mostrar_tm(self)
+
+
 
 		
 if __name__ == "__main__":
