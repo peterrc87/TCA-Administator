@@ -69,10 +69,8 @@ class Base():
 		print(self.num_faltas)
 		print("hay en la tabla faltas {}".format(len(self.num_faltas)))
 		
-		#for j in self.mi:
-		#self.lista.Append(str(i)+" faltas totales: {}".format(len(self.num_faltas)))
 		for usu in self.num_faltas:
-			self.lista.Append("{} TLF: {} {} Fecha: {} Total faltas: {}".format(str(self.mi[2]), str(self.mi[1]), usu[-1], usu[-2], len(self.num_faltas)))
+			self.lista.Append("TLF: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
 		self.lista.SetFocus()
 	
 		
