@@ -93,11 +93,11 @@ class Base():
 		self.text2.SetLabel("")
 	@co
 	def mostrar_tm(self):
-		#contar_f(self)
+		
 		self.cursor.execute("select * from miembros")
 		t_mi = self.cursor.fetchall()
 		for i in t_mi:
 			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 			u = self.cursor.fetchall()
-			self.lista.Append("{} TLF: {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[2]), str(i[1]), str(i[-2]), len(u)))
+			self.lista.Append("TLF: {} {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u)))
 		self.lista.SetFocus()
