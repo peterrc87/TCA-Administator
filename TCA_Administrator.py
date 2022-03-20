@@ -93,9 +93,15 @@ class TCA_admin(wx.Frame):
 		position = event.GetPosition()
 		self.PopupMenu(self.m_context,position)
 
+	#método para llamar a la función eliminar.
+	def elimina(self, event):
+		tb.Base.eliminar(self)
+		self.lista.Clear()
+		#self.lista.Enable()
+		tb.Base.mostrar_tm(self)
 
 		
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta02".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta03".format(version))
 	root.MainLoop()

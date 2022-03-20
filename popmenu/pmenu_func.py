@@ -20,3 +20,4 @@ def context_menu(self):
 	self.lista.Bind(wx.EVT_CONTEXT_MENU,self.showPopupMenu)
 	self.m_context = wx.Menu()
 	it_eli = self.m_context.Append(-1, "Eliminar")
+	self.Bind(wx.EVT_MENU,self.elimina, it_eli)
