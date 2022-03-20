@@ -28,17 +28,27 @@ class TCA_admin(wx.Frame):
 		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
 		self.lista = wx.ListBox(p1)
 		self.lista.Disable()
+		#eevento para capturar el string de la lista.
+		self.Bind(wx.EVT_LISTBOX, self.on_string, self.lista)
 		self.bt = wx.Button(p1, -1, "C&onsultas")
 		self.Bind(wx.EVT_BUTTON, self.ac_menu2, self.bt)
 		self.it_cho_a = None
 		#self.num_faltas = "0"
-		#llamamos a la creación del menu.
+		#llamamos a la creación del popmenu.
 		tm.create_menu(self)
+		
+		#llamamos a la creación del menú contexto.
+		tm.context_menu(self)
 		self.Centre(True)
 		self.Show()
 		
-		#métodos.
+	#métodos.
 		
+	#método para capturar el string de la lista.
+	def on_string(self, event):
+		l_str = self.lista.GetStringSelection()
+		self.it_tlf = l_str.split(" ") 	
+		return self.it_tlf[1]
 	def on_cho_a(self, event):
 		self.it_cho_a = self.cho_a.GetStringSelection()
 		print("el administrador es: {}".format(self.it_cho_a))
@@ -78,6 +88,10 @@ class TCA_admin(wx.Frame):
 		self.lista.Enable()
 		tb.Base.mostrar_tm(self)
 
+	#método llamar al menú de contexto.
+	def showPopupMenu(self, event):
+		position = event.GetPosition()
+		self.PopupMenu(self.m_context,position)
 
 
 		

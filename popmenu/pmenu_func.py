@@ -14,3 +14,9 @@ def create_menu(self):
 	self.Bind(wx.EVT_MENU, self.mostrar, it_c_fal)
 	it_tm = self.p2_menu.Append(-1, "Mostrar todos los miembros")
 	self.Bind(wx.EVT_MENU, self.mostrar_tm, it_tm)
+	
+#ahora función para el menú de contexto
+def context_menu(self):
+	self.lista.Bind(wx.EVT_CONTEXT_MENU,self.showPopupMenu)
+	self.m_context = wx.Menu()
+	it_eli = self.m_context.Append(-1, "Eliminar")
