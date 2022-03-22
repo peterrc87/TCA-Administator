@@ -60,7 +60,7 @@ class TCA_admin(wx.Frame):
 	def mostrar(self, event):
 		self.lista.Enable()
 		self.lista.Clear()
-		tb.Base.mostrar(self)
+		tb.Base.mostrar_f(self)
 	
 	
 	def añadir_falta(self, event):
@@ -100,7 +100,9 @@ class TCA_admin(wx.Frame):
 		#self.lista.Enable()
 		tb.Base.mostrar_tm(self)
 
-		
+	#método que llama al copiado del teléfono.
+	def copiar_tlf(self, event):
+		tb.Base.copyclipboard_pg(self)
 if __name__ == "__main__":
 	root= wx.App()
 	TCA_admin(None, "TCA Administrador de Grupos {} Beta03".format(version))

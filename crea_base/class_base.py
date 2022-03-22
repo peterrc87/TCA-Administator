@@ -59,8 +59,8 @@ class Base():
 		self.text2.SetLabel("")
 
 	@co
-	def mostrar(self):
-		#muestra de miembros en la base de datos.
+	def mostrar_f(self):
+		#muestra de miembros con faltas en la base de datos.
 		
 		contar_f(self)
 		print(self.num_faltas)
@@ -81,7 +81,6 @@ class Base():
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
 			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
-
 			self.conexion.commit()
 
 		self.text1.SetLabel("")
@@ -104,4 +103,15 @@ class Base():
 		self.conexion.commit()
 		self.cursor.execute("delete from miembros where tlf={}".format(self.it_tlf[1]))
 		self.conexion.commit()
+		winsound.PlaySound("waves/del.wav", winsound.SND_FILENAME)
 		print("se eliminó a {} TLF {}".format(self.it_tlf[2], self.it_tlf[1]))
+
+	
+	#método para copiar elteléfono al portapapeles.
+	def copyclipboard_pg(self):
+		texto_portapapeles =wx.TextDataObject(str(self.it_tlf[1]))
+		#print("el eelemento al portapapeles es: ",type(self.d_f[self.it2]))
+		if wx.TheClipboard.Open():
+			wx.TheClipboard.SetData(texto_portapapeles)
+			wx.TheClipboard.Flush()
+		winsound.PlaySound("waves/clip.wav", winsound.SND_FILENAME)
