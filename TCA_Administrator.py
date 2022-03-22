@@ -53,7 +53,7 @@ class TCA_admin(wx.Frame):
 		self.it_cho_a = self.cho_a.GetStringSelection()
 		print("el administrador es: {}".format(self.it_cho_a))
 	def añadir_base(self, event, *args):
-		if self.text1.GetValue() and self.text2.GetValue() != "" and self.it_cho_a != None:
+		if self.text1.GetValue() and self.text2.GetValue() != "":
 			tb.Base.agregar(self)
 		else:
 			pass

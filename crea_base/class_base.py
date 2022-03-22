@@ -34,28 +34,25 @@ class Base():
 		self.conexion = sqlite3.connect("grupos.db")
 		self.cursor = self.conexion.cursor()
 		
-		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tlf varchar(20) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), admin varchar(100))")
+		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tlf varchar(20) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100))")
 		print("se creó la tabla miembros")
 		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas varchar(20) not null, fecha varchar(100), admin varchar(100), foreign key(n_faltas) references miembros(tlf))")		
 		print("se acaba de crear la segunda tabla faltas")
 		
 		self.conexion.close()
 	#los métodos de la clase:
-	
-	
-
-	
+		
 	@co
 	def agregar(self):
 		dt = datetime.datetime.now()
-		#contar_f(self)
+		
 		#compruebo si solo  son números los introducidos en el campo self.text1
 		try:
 			eval(self.text1.GetValue())*0
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue().strip(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
 			self.conexion.commit()
 
 		self.text1.SetLabel("")
@@ -83,7 +80,7 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
 
 			self.conexion.commit()
 
