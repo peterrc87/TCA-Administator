@@ -52,7 +52,7 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}','Admin-{}')".format(self.text1.GetValue().strip(), self.text2.GetValue(), dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}')".format(self.text1.GetValue().strip(), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y %H : %M")))
 			self.conexion.commit()
 
 		self.text1.SetLabel("")
@@ -94,7 +94,7 @@ class Base():
 		for i in t_mi:
 			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 			u = self.cursor.fetchall()
-			self.lista.Append("TLF: {} {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u)))
+			self.lista.Append("TLF: {} {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[1]), str(i[2]), str(i[-1]), len(u)))
 		self.lista.SetFocus()
 	
 	#método para eliminar faltas.
