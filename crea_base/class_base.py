@@ -25,8 +25,12 @@ def contar_f(self):
 	self.mi = self.cursor.fetchone()
 	return self.num_faltas, self.mi
 
-	
+#función para ingresar los eliminados.	
+def eliminados(self):
+	dt = datetime.datetime.now()
 
+	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}')".format(self.it_tlf[1], self.it_tlf[2], dt.strftime("%a%d%B%Y")))
+	self.conexion.commit()
 
 #creo la clase.
 class Base():
@@ -38,6 +42,8 @@ class Base():
 		print("se creó la tabla miembros")
 		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas varchar(20) not null, fecha varchar(100), admin varchar(100), foreign key(n_faltas) references miembros(tlf))")		
 		print("se acaba de crear la segunda tabla faltas")
+		self.cursor.execute("create table if not exists eliminados (id integer primary key autoincrement, tlf_el varchar(20) not null, nombre_el varchar(150) not null, fecha_el varchar(100), foreign key(tlf_el) references miembros(tlf))")
+		print("se ha creado la tabla tercera eliminados")
 		
 		self.conexion.close()
 	#los métodos de la clase:
@@ -99,6 +105,8 @@ class Base():
 	#método para eliminar faltas.
 	@co
 	def eliminar(self):
+		#antes llamo a la función eliminados para que inserte en la tabla eliminados al integrante.
+		eliminados(self)
 		self.cursor.execute("delete from faltas where n_faltas={}".format(self.it_tlf[1]))
 		self.conexion.commit()
 		self.cursor.execute("delete from miembros where tlf={}".format(self.it_tlf[1]))
