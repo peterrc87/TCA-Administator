@@ -64,11 +64,15 @@ class TCA_admin(wx.Frame):
 	
 	
 	def añadir_falta(self, event):
-		if self.text1.GetValue() and self.it_cho_a != None:
-			tb.Base.faltas(self)
-			
+		tb.contar_f(self)
+		if self.mi == None:
+			wx.MessageBox("no existe el miembro en la base de datos\n No es posible agregar faltas", "No se puede realizar la operación!")
 		else:
-			pass
+			if self.text1.GetValue() and self.it_cho_a != None:
+				tb.Base.faltas(self)
+			
+			else:
+				pass
 
 		
 	#método para el poppup1 
@@ -103,6 +107,12 @@ class TCA_admin(wx.Frame):
 	#método que llama al copiado del teléfono.
 	def copiar_tlf(self, event):
 		tb.Base.copyclipboard_pg(self)
+
+	#método para llamar a la función mostrar eliminados.
+	def muestra_el(self, event):
+		self.lista.Clear()
+		self.lista.Enable()
+		tb.Base.muestra_el(self)
 if __name__ == "__main__":
 	root= wx.App()
 	TCA_admin(None, "TCA Administrador de Grupos {} Beta03".format(version))

@@ -14,15 +14,15 @@ def co(fn):
 	return co_deco
 	
 #función contar
-#@co
+@co
 def contar_f(self):
-	#contará el número de miembros en la base de  datos.
+	#contará el número de faltas de cada miembro en la base de  datos.
 	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
 	self.num_faltas=self.cursor.fetchall()
-	#self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
-	#self.mi_falta = self.cursor.fetchone()
+	
 	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue()))
 	self.mi = self.cursor.fetchone()
+	
 	return self.num_faltas, self.mi
 
 #función para ingresar los eliminados.	
@@ -69,11 +69,12 @@ class Base():
 		#muestra de miembros con faltas en la base de datos.
 		
 		contar_f(self)
-		print(self.num_faltas)
+		#print(self.num_faltas)
 		#print("hay en la tabla faltas {}".format(len(self.num_faltas)))
 		
 		for usu in self.num_faltas:
 			self.lista.Append("TLF: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
+		self.text1.SetLabel("")
 		self.lista.SetFocus()
 	
 		
@@ -123,3 +124,18 @@ class Base():
 			wx.TheClipboard.SetData(texto_portapapeles)
 			wx.TheClipboard.Flush()
 		winsound.PlaySound("waves/clip.wav", winsound.SND_FILENAME)
+
+	
+	#método para mostrar los miembros eliminados.
+	@co
+	def muestra_el(self):
+		#ahora contar en la tabla eliminados
+		self.cursor.execute("select * from eliminados")
+		self.t_el =self.cursor.fetchall()
+
+		for el in self.t_el:
+			self.cursor.execute("select * from eliminados where tlf_el={}".format(el[1]))
+			u_el = self.cursor.fetchall()
+
+			self.lista.Append("TLF {} {} fecha eliminación: {} veces eliminado {}".format(str(el[1]), el[2], el[-1], len(u_el)))
+		self.lista.SetFocus()

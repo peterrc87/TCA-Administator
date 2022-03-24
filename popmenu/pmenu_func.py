@@ -12,6 +12,8 @@ def create_menu(self):
 	self.p2_menu = wx.Menu()
 	it_c_fal = self.p2_menu.Append(-1, "Consultar faltas")
 	self.Bind(wx.EVT_MENU, self.mostrar, it_c_fal)
+	it_el = self.p2_menu.Append(-1, "Mostrar eliminados")
+	self.Bind(wx.EVT_MENU, self.muestra_el, it_el)
 	it_tm = self.p2_menu.Append(-1, "Mostrar todos los miembros")
 	self.Bind(wx.EVT_MENU, self.mostrar_tm, it_tm)
 	
