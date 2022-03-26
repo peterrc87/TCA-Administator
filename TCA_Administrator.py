@@ -22,8 +22,10 @@ class TCA_admin(wx.Frame):
 		self.Bind(wx.EVT_CHOICE, self.on_cho_a, self.cho_a)
 		st1 = wx.StaticText(p1, -1, "&Teléfono integrante")
 		self.text1 = wx.TextCtrl(p1, -1, "")
-		st2 = wx.StaticText(p1, -1, "&Nómbre integrante")
+		st2 = wx.StaticText(p1, -1, "&Nómbre integrante")		
 		self.text2 = wx.TextCtrl(p1, -1, "")
+		self.che =wx.CheckBox(p1, -1, "Observaciones")
+		self.obs = ""
 		self.bt2 = wx.Button(p1, -1, "A&cciones")
 		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
 		self.lista = wx.ListBox(p1)

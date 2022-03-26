@@ -38,7 +38,7 @@ class Base():
 		self.conexion = sqlite3.connect("grupos.db")
 		self.cursor = self.conexion.cursor()
 		
-		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tlf varchar(20) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100))")
+		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tlf varchar(20) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), observaciones text)")
 		print("se creó la tabla miembros")
 		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas varchar(20) not null, fecha varchar(100), admin varchar(100), foreign key(n_faltas) references miembros(tlf))")		
 		print("se acaba de crear la segunda tabla faltas")
@@ -50,18 +50,28 @@ class Base():
 		
 	@co
 	def agregar(self):
+		self.obs = ""
 		dt = datetime.datetime.now()
-		
+		if self.che.IsChecked():
+			dlg2 = wx.TextEntryDialog(self, "Ingresa aquí  la observación", "ingresar observación")
+			rp = dlg2.ShowModal()
+			if rp == wx.ID_OK:
+				self.obs = dlg2.GetValue()
+				print("la observación es: ", self.obs)
+			else:
+				dlg2.Destroy()
+		else:
+			pass
 		#compruebo si solo  son números los introducidos en el campo self.text1
 		try:
 			eval(self.text1.GetValue())*0
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}')".format(self.text1.GetValue().strip(), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y %H : %M")))
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}', '{}')".format(self.text1.GetValue().strip(), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y"), self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
-
+		self.che.SetValue(False)
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
 
@@ -74,7 +84,7 @@ class Base():
 		#print("hay en la tabla faltas {}".format(len(self.num_faltas)))
 		
 		for usu in self.num_faltas:
-			self.lista.Append("TLF: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
+			self.lista.Append("TEL: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.text1.SetLabel("")
 		self.lista.SetFocus()
@@ -89,7 +99,7 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y"), self.it_cho_a))
 			self.conexion.commit()
 			winsound.PlaySound("waves/fal.wav", winsound.SND_FILENAME)
 
@@ -104,7 +114,7 @@ class Base():
 		for i in t_mi:
 			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 			u = self.cursor.fetchall()
-			self.lista.Append("TLF: {} {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[1]), str(i[2]), str(i[-1]), len(u)))
+			self.lista.Append("TEL: {} {} Fecha de ingreso: {} Número de faltas: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u), str(i[-1])))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 
 		self.lista.SetFocus()
@@ -143,6 +153,6 @@ class Base():
 			self.cursor.execute("select * from eliminados where tlf_el={}".format(el[1]))
 			u_el = self.cursor.fetchall()
 
-			self.lista.Append("TLF {} {} fecha eliminación: {} veces eliminado {}".format(str(el[1]), el[2], el[-1], len(u_el)))
+			self.lista.Append("TEL {} {} fecha eliminación: {} veces eliminado {}".format(str(el[1]), el[2], el[-1], len(u_el)))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.lista.SetFocus()
