@@ -10,7 +10,7 @@ def co(fn):
 		self.cursor = self.conexion.cursor()
 		fn(self, *args)
 		self.conexion.close()
-		winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
+		#winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
 	return co_deco
 	
 #función contar
@@ -60,6 +60,7 @@ class Base():
 		else:
 			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}')".format(self.text1.GetValue().strip(), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y %H : %M")))
 			self.conexion.commit()
+			winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
 
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
@@ -74,6 +75,7 @@ class Base():
 		
 		for usu in self.num_faltas:
 			self.lista.Append("TLF: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
+		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.text1.SetLabel("")
 		self.lista.SetFocus()
 	
@@ -89,6 +91,8 @@ class Base():
 		else:
 			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y %H : %M"), self.it_cho_a))
 			self.conexion.commit()
+			winsound.PlaySound("waves/fal.wav", winsound.SND_FILENAME)
+
 
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
@@ -101,6 +105,8 @@ class Base():
 			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 			u = self.cursor.fetchall()
 			self.lista.Append("TLF: {} {} Fecha de ingreso: {} Número de faltas: {}".format(str(i[1]), str(i[2]), str(i[-1]), len(u)))
+		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
+
 		self.lista.SetFocus()
 	
 	#método para eliminar faltas.
@@ -138,4 +144,5 @@ class Base():
 			u_el = self.cursor.fetchall()
 
 			self.lista.Append("TLF {} {} fecha eliminación: {} veces eliminado {}".format(str(el[1]), el[2], el[-1], len(u_el)))
+		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.lista.SetFocus()
