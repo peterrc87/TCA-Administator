@@ -6,7 +6,7 @@ def create_menu(self):
 	self.Bind(wx.EVT_MENU, self.añadir_base, self.it_agre)
 	self.it_falta = self.p_menu.Append(-1, "Añadir falta")
 	self.Bind(wx.EVT_MENU, self.añadir_falta, self.it_falta)
-	self.it_el = self.p_menu.Append(-1, "Eliminar integrante")
+	#self.it_el = self.p_menu.Append(-1, "Eliminar integrante")
 	
 	#ahora el otro popup para el botón 2.
 	self.p2_menu = wx.Menu()

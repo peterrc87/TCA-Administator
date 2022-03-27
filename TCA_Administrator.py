@@ -14,7 +14,8 @@ class TCA_admin(wx.Frame):
 		self.version = version 
 		#creo un panel.
 		p1 = wx.Panel(self)
-		
+#creo un sizer para organizar los controles.		
+		gsz = wx.GridBagSizer(4, 3)
 		#controles necesario:
 		st = wx.StaticText(p1, -1, "&Administrador")
 		self.cho_ops_a = ["Diego", "Libardo", "Marisol", "Peter", "Ricardo", "Roberto", "Sigifredo"]
@@ -26,16 +27,30 @@ class TCA_admin(wx.Frame):
 		self.text2 = wx.TextCtrl(p1, -1, "")
 		self.che =wx.CheckBox(p1, -1, "Observaciones")
 		self.obs = ""
-		self.bt2 = wx.Button(p1, -1, "A&cciones")
-		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
 		self.lista = wx.ListBox(p1)
 		self.lista.Disable()
-		#eevento para capturar el string de la lista.
+		#evento para capturar el string de la lista.
 		self.Bind(wx.EVT_LISTBOX, self.on_string, self.lista)
+
+		self.bt2 = wx.Button(p1, -1, "A&cciones")
+		self.Bind(wx.EVT_BUTTON, self.ac_menu, self.bt2)
+		
 		self.bt = wx.Button(p1, -1, "C&onsultas")
 		self.Bind(wx.EVT_BUTTON, self.ac_menu2, self.bt)
 		self.it_cho_a = None
-		#self.num_faltas = "0"
+		
+		#añadimos al sizer.
+		gsz.Add(st, (0,0), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.cho_a, (0,1), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(st1, (1,0), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.text1, (1,1), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(st2, (2,0), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.text2, (2,1), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.che, (2,2), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.bt2, (3,1), (1,1), wx.EXPAND|wx.ALL, 10)
+		gsz.Add(self.bt, (3,2), (1,1), wx.EXPAND|wx.ALL, 10)
+		p1.SetSizer(gsz)
+		
 		#llamamos a la creación del popmenu.
 		tm.create_menu(self)
 		
@@ -55,28 +70,40 @@ class TCA_admin(wx.Frame):
 		self.it_cho_a = self.cho_a.GetStringSelection()
 		print("el administrador es: {}".format(self.it_cho_a))
 	def añadir_base(self, event, *args):
-		if self.text1.GetValue() and self.text2.GetValue() != "":
+		if self.text1.GetValue() != "" and self.text2.GetValue() != "":
 			tb.Base.agregar(self)
+			self.lista.Clear()
+			#self.lista.Enable()
+			tb.Base.mostrar_tm(self)
+
 		else:
-			pass
+			wx.MessageBox("Debe ingresar un número de teléfono, y un nombre de integrante para añadir un miembro", "Atención faltan datos")
+	
+	#método para mostrar miembros con faltas.
 	def mostrar(self, event):
-		self.lista.Enable()
-		self.lista.Clear()
-		tb.Base.mostrar_f(self)
+		if self.text1.GetValue() != "":			
+			self.lista.Enable()
+			self.lista.Clear()
+			tb.Base.mostrar_f(self)
+		else:
+			wx.MessageBox("Debe ingresar un número de teléfono, para consultar las faltas", "Atención falta el teléfono")
 	
 	
 	def añadir_falta(self, event):
-		tb.contar_f(self)
-		if self.mi == None:
-			wx.MessageBox("no existe el miembro en la base de datos\n No es posible agregar faltas", "No se puede realizar la operación!")
-		else:
-			if self.text1.GetValue() and self.it_cho_a != None:
-				tb.Base.faltas(self)
-			
+		if self.text1.GetValue() != "" and self.it_cho_a != None:
+			tb.contar_f(self)
+			if self.mi == None:
+				wx.MessageBox("no existe el miembro en la base de datos\n No es posible agregar faltas", "No se puede realizar la operación!")
 			else:
-				pass
+				tb.Base.faltas(self)
+		else:
+			wx.MessageBox("Debe escoger un administrador, e ingresar un número de teléfono válido, para añadir una falta.",  "Atentción faltan opciones")
+	
+		
 
 		
+			
+
 	#método para el poppup1 
 	def ac_menu(self, event):
 		
@@ -115,7 +142,9 @@ class TCA_admin(wx.Frame):
 		self.lista.Clear()
 		self.lista.Enable()
 		tb.Base.muestra_el(self)
+
+			
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta03".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta04".format(version))
 	root.MainLoop()
