@@ -46,8 +46,6 @@ def ob_func(self):
 	else:
 		pass
 
-
-
 #creo la clase.
 class Base():
 	def  __init__(self, *arg, **kwargs):
@@ -75,7 +73,7 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}', '{}')".format(self.text1.GetValue().strip(), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y"), self.obs))
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+",""), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y"), self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
 		self.che.SetValue(False)
@@ -99,6 +97,7 @@ class Base():
 		
 	@co
 	def faltas(self):
+		#añadirá una falta a algún miemro.
 		self.obs = ""
 		dt = datetime.datetime.now()
 		ob_func(self)
@@ -107,7 +106,7 @@ class Base():
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}', '{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y"), self.it_cho_a, self.obs))
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+",""),  dt.strftime("%a%d%B%Y"), self.it_cho_a, self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/fal.wav", winsound.SND_FILENAME)
 
@@ -164,3 +163,25 @@ class Base():
 			self.lista.Append("TEL {} {} fecha eliminación: {} veces eliminado {} Observaciones: {}".format(str(el[1]), el[2], el[-2], len(u_el), el[-1]))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.lista.SetFocus()
+
+	
+	#método para editar número de teléfono.
+	@co
+	def editar_tlf(self):
+		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí el nuevo número de teléfono", "Editando teléfono")
+		rp = dlg2.ShowModal()
+		if rp == wx.ID_OK:
+			n_tlf = dlg2.GetValue().strip().replace("+", "").replace("-", "")		
+		else:
+			dlg2.Destroy()
+		try:
+			eval(n_tlf)*0
+		except:
+			wx.MessageBox("Debe ingresar un número de teléfono válido", "Atención número incorrecto")
+		else:
+			self.cursor.execute("update miembros set tlf = {} where tlf = {}".format(n_tlf, self.it_tlf[1]))
+			self.cursor.execute("update faltas set n_faltas = {} where n_faltas = {}".format(n_tlf, self.it_tlf[1]))
+			self.cursor.execute("update eliminados set tlf_el = {} where tlf_el = {}".format(n_tlf, self.it_tlf[1]))
+
+			self.conexion.commit()
+			print("se cambió el número de teléfono con éxito")

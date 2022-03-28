@@ -21,6 +21,11 @@ def create_menu(self):
 def context_menu(self):
 	self.lista.Bind(wx.EVT_CONTEXT_MENU,self.showPopupMenu)
 	self.m_context = wx.Menu()
+	m_editar =wx.Menu()
+	it_ed_tlf = m_editar.Append(-1, "Teléfono")
+	self.Bind(wx.EVT_MENU, self.edita_tlf, it_ed_tlf)
+	it_ed_obs = m_editar.Append(-1, "observaciones")
+	self.m_context.AppendSubMenu(m_editar, "Editar")
 	it_co = self.m_context.Append(-1, "Copiar teléfono")
 	self.Bind(wx.EVT_MENU, self.copiar_tlf, it_co)
 	it_eli = self.m_context.Append(-1, "Eliminar")

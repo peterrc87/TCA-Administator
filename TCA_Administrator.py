@@ -63,7 +63,6 @@ class TCA_admin(wx.Frame):
 		self.Show()
 		
 	#métodos.
-		
 	#método para capturar el string de la lista.
 	def on_string(self, event):
 		l_str = self.lista.GetStringSelection()
@@ -146,8 +145,13 @@ class TCA_admin(wx.Frame):
 		self.lista.Enable()
 		tb.Base.muestra_el(self)
 
-			
+	#método para llamar a la función que cambia el número de teléfono.
+	def edita_tlf(self, event):
+		tb.Base.editar_tlf(self)
+		self.lista.Clear()
+		tb.Base.mostrar_tm(self)
+
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta04".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta05".format(version))
 	root.MainLoop()
