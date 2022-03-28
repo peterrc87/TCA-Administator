@@ -56,6 +56,9 @@ class TCA_admin(wx.Frame):
 		
 		#llamamos a la creación del menú contexto.
 		tm.context_menu(self)
+		
+		#llamamos a la creación de la barra de menú.
+		tm.create_menubar(self)
 		self.Centre(True)
 		self.Show()
 		

@@ -18,8 +18,7 @@ def co(fn):
 def contar_f(self):
 	#contará el número de faltas de cada miembro en la base de  datos.
 	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
-	self.num_faltas=self.cursor.fetchall()
-	
+	self.num_faltas=self.cursor.fetchall()	
 	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue()))
 	self.mi = self.cursor.fetchone()
 	
@@ -27,10 +26,27 @@ def contar_f(self):
 
 #función para ingresar los eliminados.	
 def eliminados(self):
+	self.obs = ""
 	dt = datetime.datetime.now()
-
-	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}')".format(self.it_tlf[1], self.it_tlf[2], dt.strftime("%a%d%B%Y")))
+	ob_func(self)
+	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}', '{}')".format(self.it_tlf[1], self.it_tlf[2], dt.strftime("%a%d%B%Y"), self.obs))
 	self.conexion.commit()
+	self.che.SetValue(False)
+	
+#función para observaciones.
+def ob_func(self):
+	if self.che.IsChecked():
+		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí  la observación", "ingresar observación")
+		rp = dlg2.ShowModal()
+		if rp == wx.ID_OK:
+			self.obs = dlg2.GetValue()
+			print("la observación es: ", self.obs)
+		else:
+			dlg2.Destroy()
+	else:
+		pass
+
+
 
 #creo la clase.
 class Base():
@@ -40,9 +56,9 @@ class Base():
 		
 		self.cursor.execute("create table if not exists miembros (id integer primary key autoincrement, tlf varchar(20) unique not null, nombre varchar(150) not null,  fecha_hora varchar(100), observaciones text)")
 		print("se creó la tabla miembros")
-		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas varchar(20) not null, fecha varchar(100), admin varchar(100), foreign key(n_faltas) references miembros(tlf))")		
+		self.cursor.execute("create table if not exists faltas (id integer primary key autoincrement, n_faltas varchar(20) not null, fecha varchar(100), admin varchar(100), obs_fal text, foreign key(n_faltas) references miembros(tlf))")		
 		print("se acaba de crear la segunda tabla faltas")
-		self.cursor.execute("create table if not exists eliminados (id integer primary key autoincrement, tlf_el varchar(20) not null, nombre_el varchar(150) not null, fecha_el varchar(100), foreign key(tlf_el) references miembros(tlf))")
+		self.cursor.execute("create table if not exists eliminados (id integer primary key autoincrement, tlf_el varchar(20) not null, nombre_el varchar(150) not null, fecha_el varchar(100), obs_el text, foreign key(tlf_el) references miembros(tlf))")
 		print("se ha creado la tabla tercera eliminados")
 		
 		self.conexion.close()
@@ -52,16 +68,7 @@ class Base():
 	def agregar(self):
 		self.obs = ""
 		dt = datetime.datetime.now()
-		if self.che.IsChecked():
-			dlg2 = wx.TextEntryDialog(self, "Ingresa aquí  la observación", "ingresar observación")
-			rp = dlg2.ShowModal()
-			if rp == wx.ID_OK:
-				self.obs = dlg2.GetValue()
-				print("la observación es: ", self.obs)
-			else:
-				dlg2.Destroy()
-		else:
-			pass
+		ob_func(self)	
 		#compruebo si solo  son números los introducidos en el campo self.text1
 		try:
 			eval(self.text1.GetValue())*0
@@ -84,7 +91,7 @@ class Base():
 		#print("hay en la tabla faltas {}".format(len(self.num_faltas)))
 		
 		for usu in self.num_faltas:
-			self.lista.Append("TEL: {} {} {} Fecha: {} Total faltas: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-1], usu[-2], len(self.num_faltas)))
+			self.lista.Append("TEL: {} {} {} Fecha: {} Total faltas: {} OBservaciones: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-2], usu[-3], len(self.num_faltas), usu[-1]))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.text1.SetLabel("")
 		self.lista.SetFocus()
@@ -92,18 +99,19 @@ class Base():
 		
 	@co
 	def faltas(self):
+		self.obs = ""
 		dt = datetime.datetime.now()
-
+		ob_func(self)
 		try:
 			eval(self.text1.GetValue())*0
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y"), self.it_cho_a))
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}', '{}')".format(self.text1.GetValue().strip(),  dt.strftime("%a%d%B%Y"), self.it_cho_a, self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/fal.wav", winsound.SND_FILENAME)
 
-
+		self.che.SetValue(False)
 		self.text1.SetLabel("")
 		self.text2.SetLabel("")
 	@co
@@ -119,7 +127,7 @@ class Base():
 
 		self.lista.SetFocus()
 	
-	#método para eliminar faltas.
+	#método para eliminar miembros.
 	@co
 	def eliminar(self):
 		#antes llamo a la función eliminados para que inserte en la tabla eliminados al integrante.
@@ -153,6 +161,6 @@ class Base():
 			self.cursor.execute("select * from eliminados where tlf_el={}".format(el[1]))
 			u_el = self.cursor.fetchall()
 
-			self.lista.Append("TEL {} {} fecha eliminación: {} veces eliminado {}".format(str(el[1]), el[2], el[-1], len(u_el)))
+			self.lista.Append("TEL {} {} fecha eliminación: {} veces eliminado {} Observaciones: {}".format(str(el[1]), el[2], el[-2], len(u_el), el[-1]))
 		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.lista.SetFocus()

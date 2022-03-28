@@ -25,3 +25,12 @@ def context_menu(self):
 	self.Bind(wx.EVT_MENU, self.copiar_tlf, it_co)
 	it_eli = self.m_context.Append(-1, "Eliminar")
 	self.Bind(wx.EVT_MENU,self.elimina, it_eli)
+
+#creación de la barra de menú.
+def create_menubar(self):
+	menubar = wx.MenuBar()
+	#menú Archivo.
+	m_archivo = wx.Menu()
+	it_gu_mi = m_archivo.Append(-1, "Exportar miembros a txt")
+	menubar.Append(m_archivo, "&Archivo")
+	self.SetMenuBar(menubar)
