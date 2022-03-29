@@ -29,7 +29,11 @@ def eliminados(self):
 	self.obs = ""
 	dt = datetime.datetime.now()
 	ob_func(self)
-	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}', '{}')".format(self.it_tlf[1], self.it_tlf[2], dt.strftime("%a%d%B%Y"), self.obs))
+	self.cursor.execute("select nombre from miembros where tlf = {}".format(self.it_tlf[1]))
+	nom_u = self.cursor.fetchone()
+	for i in nom_u:
+		nombre_u = i
+	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}', '{}')".format(self.it_tlf[1], nombre_u, dt.strftime("%a%d%B%Y"), self.obs))
 	self.conexion.commit()
 	self.che.SetValue(False)
 	
@@ -185,3 +189,28 @@ class Base():
 
 			self.conexion.commit()
 			print("se cambió el número de teléfono con éxito")
+	
+	#método para editar el nombre de un miembro.
+	@co
+	def editar_nombre(self):
+		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí el nuevo nombre de integrante", "Editando nombre")
+		rp = dlg2.ShowModal()
+		if rp == wx.ID_OK:
+			n_nombre = dlg2.GetValue().title()	
+			self.cursor.execute("update miembros set nombre = '{}' where tlf = {}".format(str(n_nombre),self.it_tlf[1]))
+			self.conexion.commit()
+		else:
+			dlg2.Destroy()
+		
+	
+	#método para editar observaciones.
+	@co
+	def editar_obs(self):
+		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí la nueva observación", "Editando observaciones")
+		rp = dlg2.ShowModal()
+		if rp == wx.ID_OK:
+			n_obs = dlg2.GetValue().strip()	
+			self.cursor.execute("update miembros set observaciones = '{}' where tlf = {}".format(str(n_obs),self.it_tlf[1]))
+			self.conexion.commit()
+		else:
+			dlg2.Destroy()

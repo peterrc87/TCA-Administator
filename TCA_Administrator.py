@@ -150,8 +150,22 @@ class TCA_admin(wx.Frame):
 		tb.Base.editar_tlf(self)
 		self.lista.Clear()
 		tb.Base.mostrar_tm(self)
+	
+	#método que llama a la función para cambiar el nombre a un miembro.
+	def cambia_nombre(self, event):
+		tb.Base.editar_nombre(self)
+		self.lista.Clear()
+		tb.Base.mostrar_tm(self)
+	
+	#método para llamar a la función editar observaciones.
+	def edita_obs(self, event):
+		tb.Base.editar_obs(self)
+		self.lista.Clear()
+		tb.Base.mostrar_tm(self)
+
+
 
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta05".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta06".format(version))
 	root.MainLoop()
