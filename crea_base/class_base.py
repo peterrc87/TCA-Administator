@@ -17,9 +17,9 @@ def co(fn):
 @co
 def contar_f(self):
 	#contará el número de faltas de cada miembro en la base de  datos.
-	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue()))
+	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")))
 	self.num_faltas=self.cursor.fetchall()	
-	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue()))
+	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")))
 	self.mi = self.cursor.fetchone()
 	
 	return self.num_faltas, self.mi
@@ -33,7 +33,7 @@ def eliminados(self):
 	nom_u = self.cursor.fetchone()
 	for i in nom_u:
 		nombre_u = i
-	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}', '{}')".format(self.it_tlf[1], nombre_u, dt.strftime("%a%d%B%Y"), self.obs))
+	self.cursor.execute("insert into eliminados values (null, '{}', '{}', '{}', '{}')".format(self.it_tlf[1], nombre_u, dt.strftime("%A%d%B%Y"), self.obs))
 	self.conexion.commit()
 	self.che.SetValue(False)
 	
@@ -70,14 +70,15 @@ class Base():
 	def agregar(self):
 		self.obs = ""
 		dt = datetime.datetime.now()
-		ob_func(self)	
+		ob_func(self)
+		
 		#compruebo si solo  son números los introducidos en el campo self.text1
 		try:
-			eval(self.text1.GetValue())*0
+			eval(self.text1.GetValue().replace(" ", ""))*0
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+",""), self.text2.GetValue().title(), dt.strftime("%a%d%B%Y"), self.obs))
+			self.cursor.execute("insert into miembros values (null, '{}', '{}', '{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+","").replace(" ", ""), self.text2.GetValue().title().strip(), dt.strftime("%A%d%B%Y"), self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/in.wav", winsound.SND_FILENAME)
 		self.che.SetValue(False)
@@ -106,11 +107,11 @@ class Base():
 		dt = datetime.datetime.now()
 		ob_func(self)
 		try:
-			eval(self.text1.GetValue())*0
+			eval(self.text1.GetValue().replace(" ",""))*0
 		except:
 			dlg = wx.MessageBox("Debe introducir un número válido en el campo teléfono")
 		else:
-			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+",""),  dt.strftime("%a%d%B%Y"), self.it_cho_a, self.obs))
+			self.cursor.execute("insert into faltas values (null, '{}', '{}', 'Admin-{}', '{}')".format(self.text1.GetValue().strip().replace("-","").replace("+","").replace(" ", ""),  dt.strftime("%A%d%B%Y"), self.it_cho_a, self.obs))
 			self.conexion.commit()
 			winsound.PlaySound("waves/fal.wav", winsound.SND_FILENAME)
 
@@ -175,7 +176,7 @@ class Base():
 		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí el nuevo número de teléfono", "Editando teléfono")
 		rp = dlg2.ShowModal()
 		if rp == wx.ID_OK:
-			n_tlf = dlg2.GetValue().strip().replace("+", "").replace("-", "")		
+			n_tlf = dlg2.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")		
 		else:
 			dlg2.Destroy()
 		try:
@@ -196,8 +197,8 @@ class Base():
 		dlg2 = wx.TextEntryDialog(self, "Ingresa aquí el nuevo nombre de integrante", "Editando nombre")
 		rp = dlg2.ShowModal()
 		if rp == wx.ID_OK:
-			n_nombre = dlg2.GetValue().title()	
-			self.cursor.execute("update miembros set nombre = '{}' where tlf = {}".format(str(n_nombre),self.it_tlf[1]))
+			n_nombre = dlg2.GetValue().title().strip()	
+			self.cursor.execute("update miembros set nombre = '{}' where tlf = {}".format(n_nombre,self.it_tlf[1]))
 			self.conexion.commit()
 		else:
 			dlg2.Destroy()

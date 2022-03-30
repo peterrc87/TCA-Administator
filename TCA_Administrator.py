@@ -5,6 +5,7 @@ import os, winsound
 version="1.0"
 from crea_base import class_base as tb 
 from popmenu import pmenu_func as tm
+from tools import tools_func as to 
 
 class TCA_admin(wx.Frame):
 	def __init__(self, parent, title):
@@ -167,5 +168,5 @@ class TCA_admin(wx.Frame):
 
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta06".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta07".format(version))
 	root.MainLoop()
