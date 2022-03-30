@@ -164,7 +164,9 @@ class TCA_admin(wx.Frame):
 		self.lista.Clear()
 		tb.Base.mostrar_tm(self)
 
-
+	#método que llama a la exportarción de tabla miembros.
+	def ex_miembros(self, event):
+		to.exp_miembros(self)
 
 if __name__ == "__main__":
 	root= wx.App()

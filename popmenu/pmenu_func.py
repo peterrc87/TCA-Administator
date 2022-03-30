@@ -40,6 +40,7 @@ def create_menubar(self):
 	menubar = wx.MenuBar()
 	#menú Archivo.
 	m_archivo = wx.Menu()
-	it_gu_mi = m_archivo.Append(-1, "Exportar miembros a txt")
+	it_ex_mi = m_archivo.Append(-1, "Exportar miembros a txt")
+	self.Bind(wx.EVT_MENU, self.ex_miembros, it_ex_mi)
 	menubar.Append(m_archivo, "&Archivo")
 	self.SetMenuBar(menubar)
