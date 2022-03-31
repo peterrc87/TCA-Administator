@@ -170,5 +170,5 @@ class TCA_admin(wx.Frame):
 
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta07".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta08".format(version))
 	root.MainLoop()
