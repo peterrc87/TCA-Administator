@@ -1,0 +1,10 @@
+TCAAdministrator 1.0 Informe de miembros con faltas 
+ Fecha de informe: viernes 01 abril 2022 Hora: 16:40
+ Total miembros con faltas: 6
+ Lista de miembros con faltas:
+ TEL: 51183280983 Pedro Olivos Fecha de falta: ma.29marzo2022 falta aplicada por:  Admin-Marisol Faltas acumuladas: 1 Observaciones: 
+ TEL: 5912323321 Tomás Bolivia Fecha de falta: miércoles30marzo2022 falta aplicada por:  Admin-Marisol Faltas acumuladas: 1 Observaciones: 
+ TEL: 573213218923 Dayana Rivas Fecha de falta: miércoles30marzo2022 falta aplicada por:  Admin-Diego Faltas acumuladas: 2 Observaciones: 
+ TEL: 573213218923 Dayana Rivas Fecha de falta: miércoles30marzo2022 falta aplicada por:  Admin-Marisol Faltas acumuladas: 2 Observaciones: 
+ TEL: 57239099212 Daniela Rodriguéz Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Diego Faltas acumuladas: 2 Observaciones: 
+ TEL: 57239099212 Daniela Rodriguéz Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Libardo Faltas acumuladas: 2 Observaciones: 
