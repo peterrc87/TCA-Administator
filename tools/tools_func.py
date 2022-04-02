@@ -10,7 +10,7 @@ locale.setlocale(locale.LC_ALL, "es")
 
 #ffunción para guardar el archivo.
 def descargar_co(self):
-	archivo="info_miembros"
+	archivo="info_TCA-Administrator"
 	wildcard= "Texto (*txt)|*txt"
 	dlg=wx.FileDialog(self,"Guardar como",os.getcwd(), archivo,wildcard=wildcard,style=wx.FD_SAVE| wx.FD_OVERWRITE_PROMPT)
 	if(dlg.ShowModal()==wx.ID_OK):
@@ -62,5 +62,26 @@ def ex_faltas(self):
 		
 		with open(self.ruta_f, "a") as fichero:
 			fichero.write("\n TEL: {} {} Fecha de falta: {} falta aplicada por:  {} Faltas acumuladas: {} Observaciones: {}".format(str(i[1]), str(u[2]), str(i[-3]), str(i[-2]), len(tf), i[-1]))
+		
+	winsound.PlaySound("waves/te.wav", winsound.SND_FILENAME)
+
+#función para exportar de la tabla eliminados.
+@co
+def ex_eliminados(self):
+	dt=datetime.datetime.now()
+	descargar_co(self)
+	
+	self.cursor.execute("select * from eliminados")
+	todos_el = self.cursor.fetchall()
+	
+	f = open(self.ruta_f, "a")
+	f.write("TCAAdministrator 1.0 Informe de miembros eliminados \n Fecha de informe: {}\n Total miembros eliminados: {}\n Lista de miembros eliminados:".format(dt.strftime("%A %d %B %Y Hora: %H:%M"), len(todos_el)))
+	f.close()
+	print("se creó el informe")
+	for i in todos_el:
+		self.cursor.execute("select * from eliminados where tlf_el={}".format(i[1]))
+		u_el = self.cursor.fetchall()
+		with open(self.ruta_f, "a") as fichero:
+			fichero.write("\n TEL: {} {} Fecha de eliminación: {} Veces eliminado: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[3]), len(u_el), str(i[-1])))
 		
 	winsound.PlaySound("waves/te.wav", winsound.SND_FILENAME)

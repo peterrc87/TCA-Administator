@@ -171,7 +171,11 @@ class TCA_admin(wx.Frame):
 	#método que llama a la función exportar miembros con faltas.
 	def ex_faltas(self, event):
 		to.ex_faltas(self)
+	
+	#método que llama a la función para exportar eliminados.
+	def ex_eliminados(self, event):
+		to.ex_eliminados(self)
 if __name__ == "__main__":
 	root= wx.App()
-	TCA_admin(None, "TCA Administrador de Grupos {} Beta09".format(version))
+	TCA_admin(None, "TCA Administrador de Grupos {} Beta 09".format(version))
 	root.MainLoop()
