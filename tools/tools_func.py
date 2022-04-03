@@ -46,7 +46,9 @@ def exp_miembros(self):
 def ex_faltas(self):
 	dt=datetime.datetime.now()
 	descargar_co(self)
-	self.cursor.execute("select * from faltas")
+	#self.cursor.execute("select * from faltas")
+	self.cursor.execute("select miembros.tlf, miembros.nombre, faltas.fecha, faltas.admin, faltas.obs_fal from faltas left join miembros on miembros.tlf = faltas.n_faltas")
+
 	total_f = self.cursor.fetchall()
 	
 	f = open(self.ruta_f, "a")
@@ -54,14 +56,11 @@ def ex_faltas(self):
 	f.close()
 	print("se creó el informe")
 	for i in total_f:
-		self.cursor.execute("select * from miembros where tlf={}".format(i[1]))
-		u = self.cursor.fetchone()
-		self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
+		self.cursor.execute("select * from faltas where n_faltas={}".format(i[0]))
 		tf = self.cursor.fetchall()
 
-		
 		with open(self.ruta_f, "a") as fichero:
-			fichero.write("\n TEL: {} {} Fecha de falta: {} falta aplicada por:  {} Faltas acumuladas: {} Observaciones: {}".format(str(i[1]), str(u[2]), str(i[-3]), str(i[-2]), len(tf), i[-1]))
+			fichero.write("\n TEL: {} {} Fecha de falta: {} falta aplicada por:  {} Faltas acumuladas: {} Observaciones: {}".format(str(i[0]), str(i[1]), str(i[2]), str(i[-2]), len(tf), i[-1]))
 		
 	winsound.PlaySound("waves/te.wav", winsound.SND_FILENAME)
 

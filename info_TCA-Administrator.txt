@@ -1,0 +1,21 @@
+TCAAdministrator 1.0 Informe de miembros con faltas 
+ Fecha de informe: domingo 03 abril 2022 Hora: 23:39
+ Total miembros con faltas: 17
+ Lista de miembros con faltas:
+ TEL: 50377737173 Glenda Alfaro Fecha de falta: lu.28marzo2022 falta aplicada por:  Admin-Diego Faltas acumuladas: 1 Observaciones: compartió un tutorial
+ TEL: 51947305005 Pedrito Olivos Fecha de falta: mi.30marzo2022 falta aplicada por:  Admin-Libardo Faltas acumuladas: 2 Observaciones: llamó la atención a otro integrante
+ TEL: 111111111111 Irving Vasquez Fecha de falta: jueves31marzo2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 1 Observaciones: 3 veces en emismo rato no dijo su nombre
+ TEL: 50766695758 Isaac Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 1 Observaciones: No se presentó al intervenir.
+ TEL: 50257105947 Psicóloga Maricarmen Herrera Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Sigifredo Faltas acumuladas: 2 Observaciones: No se presentó al intervenir.
+ TEL: 333333333333 Harold Martines Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 2 Observaciones: 
+ TEL: 444444444 Jose Ponce Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 2 Observaciones: no dice su nombre y en el archivo que pasó hay el nombre de otro canal
+ TEL: 444444444 Jose Ponce Fecha de falta: viernes01abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 2 Observaciones: es la segunda falta en el mismo día
+ TEL: 555555555 Danieljushihara Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Roberto Faltas acumuladas: 1 Observaciones: 
+ TEL: 66666666 Andrés Sebastián Ramírez Medina Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 1 Observaciones: no dijo su nombre, y no se ha presentado por voz, 
+ TEL: 333333333333 Harold Martines Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 2 Observaciones: no dice su nombre
+ TEL: 573115357782 Luz Dari Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Peter Faltas acumuladas: 1 Observaciones: No se presentó al intervenir.
+ TEL: 573022737168 Dairo Colombia Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Sigifredo Faltas acumuladas: 1 Observaciones: No se presentó al intervenir.
+ TEL: 777777777 Luis De México Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Roberto Faltas acumuladas: 1 Observaciones: 
+ TEL: 51947305005 Pedrito Olivos Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Diego Faltas acumuladas: 2 Observaciones: 
+ TEL: 56993239625 Bayron De Chile Fecha de falta: sábado02abril2022 falta aplicada por:  Admin-Diego Faltas acumuladas: 1 Observaciones: 
+ TEL: 50257105947 Psicóloga Maricarmen Herrera Fecha de falta: domingo03abril2022 falta aplicada por:  Admin-Marisol Faltas acumuladas: 2 Observaciones: 
