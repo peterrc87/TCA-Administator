@@ -48,13 +48,13 @@ def create_menubar(self):
 	self.Bind(wx.EVT_MENU, self.ex_miembros, it_ex_mi)
 	
 	#menú Herramientas
-	m_herra = wx.Menu()
-	sm_buscar = wx.Menu()
-	it_bus_el = sm_buscar.Append(-1, "En tabla eliminados")
-	it_bus_fal = sm_buscar.Append(-1, "en tabla faltas")
+	m_buscar = wx.Menu()
+	
+	it_bus_el = m_buscar.Append(-1, "En tabla eliminados")
+	it_bus_fal = m_buscar.Append(-1, "en tabla faltas")
 	self.Bind(wx.EVT_MENU, self.buscar_fal, it_bus_fal)
-	it_bus_mi = sm_buscar.Append(-1, "En tabla miembros")
-	m_herra.AppendSubMenu(sm_buscar, "Buscar")
+	it_bus_mi = m_buscar.Append(-1, "En tabla miembros")
+	
 	menubar.Append(m_archivo, "&Archivo")
-	menubar.Append(m_herra, "&Herramientas")
+	menubar.Append(m_buscar, "&Buscar 🔎")
 	self.SetMenuBar(menubar)
