@@ -3,10 +3,7 @@ import sqlite3
 import winsound
 import locale, datetime
 from crea_base.class_base import co, contar_f
-
 locale.setlocale(locale.LC_ALL, "es")
-
-#creo la ruta para guardar el archivo txt
 
 #ffunción para guardar el archivo.
 def descargar_co(self):
@@ -81,6 +78,29 @@ def ex_eliminados(self):
 		self.cursor.execute("select * from eliminados where tlf_el={}".format(i[1]))
 		u_el = self.cursor.fetchall()
 		with open(self.ruta_f, "a") as fichero:
-			fichero.write("\n TEL: {} {} Fecha de eliminación: {} Veces eliminado: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[3]), len(u_el), str(i[-1])))
-		
+			fichero.write("\n TEL: {} {} Fecha de eliminación: {} Veces eliminado: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[3]), len(u_el), str(i[-1])))		
 	winsound.PlaySound("waves/te.wav", winsound.SND_FILENAME)
+
+#Funciones para la búsqueda.
+#función para capturar el texto  que se ingresa en la búsqueda.
+def texto_b(self):
+	dlg2 = wx.TextEntryDialog(self, "Ingresa aquí la búsqueda ", "Buscar en TCA Administrador")
+	rp = dlg2.ShowModal()
+	if rp == wx.ID_OK:
+		self.t_bus = dlg2.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")		
+	else:
+		dlg2.Destroy()
+	return self.t_bus
+
+#función para buscar en la tabla faltas.
+@co
+def buscar_fal(self):
+	texto_b(self)
+	self.cursor.execute("select miembros.nombre, faltas.n_faltas, faltas.fecha, faltas.admin, faltas.obs_fal from miembros left join faltas on faltas.n_faltas=miembros.tlf where nombre like '%{}%'".format(self.t_bus))
+	mf = self.cursor.fetchall()
+	for i in mf:
+		if i[1] == None:
+			continue
+		self.lista.Append("TEL: {} {} Fecha de falta: {} Falta aplicada por: {} Observación: {}".format(i[1], i[0], i[2], i[3], i[-1]))
+	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
+	self.lista.SetFocus()

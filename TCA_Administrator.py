@@ -175,6 +175,12 @@ class TCA_admin(wx.Frame):
 	#método que llama a la función para exportar eliminados.
 	def ex_eliminados(self, event):
 		to.ex_eliminados(self)
+	
+	#método que llama a la función buscar en la tabla faltas.
+	def buscar_fal(self, event):
+		self.lista.Enable()
+		self.lista.Clear()
+		to.buscar_fal(self)
 if __name__ == "__main__":
 	root= wx.App()
 	TCA_admin(None, "TCA Administrador de Grupos {} Beta 09".format(version))
