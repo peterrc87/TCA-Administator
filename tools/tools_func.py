@@ -2,7 +2,7 @@
 import sqlite3
 import winsound
 import locale, datetime
-from crea_base.class_base import co, contar_f
+from crea_base.class_base import co, foco_so
 locale.setlocale(locale.LC_ALL, "es")
 
 #ffunción para guardar el archivo.
@@ -102,8 +102,7 @@ def buscar_fal(self):
 		if i[1] == None:
 			continue
 		self.lista.Append("TEL: {} {} Fecha de falta: {} Falta aplicada por: {} Observación: {}".format(i[1], i[0], i[2], i[3], i[-1]))
-	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
-	self.lista.SetFocus()
+	foco_so(self)
 
 #función para buscar en tabla eliminados.
 @co
@@ -113,9 +112,7 @@ def buscar_el(self):
 	todos_el = self.cursor.fetchall()
 	for i in todos_el:
 		self.lista.Append("TEL: {} {} Fecha de eliminación: {} Observación: {}".format(i[1], i[2], i[3], i[-1]))
-	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
-	self.lista.SetFocus()
-
+	foco_so(self)
 
 #función para buscar en la tabla miembros.
 @co
@@ -125,5 +122,4 @@ def buscar_mi(self):
 	todos_mi = self.cursor.fetchall()
 	for i in todos_mi:
 		self.lista.Append("TEL: {} {} Fecha de ingreso: {} Observación: {}".format(i[1], i[2], i[3], i[-1]))
-	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
-	self.lista.SetFocus()
+	foco_so(self)

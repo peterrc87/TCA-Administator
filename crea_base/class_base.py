@@ -20,8 +20,7 @@ def contar_f(self):
 	self.cursor.execute("select * from faltas where n_faltas={}".format(self.text1.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")))
 	self.num_faltas=self.cursor.fetchall()	
 	self.cursor.execute("select * from miembros where tlf={}".format(self.text1.GetValue().strip().replace("+", "").replace("-", "").replace(" ", "")))
-	self.mi = self.cursor.fetchone()
-	
+	self.mi = self.cursor.fetchone()	
 	return self.num_faltas, self.mi
 
 #función para ingresar los eliminados.	
@@ -44,11 +43,17 @@ def ob_func(self):
 		rp = dlg2.ShowModal()
 		if rp == wx.ID_OK:
 			self.obs = dlg2.GetValue()
-			print("la observación es: ", self.obs)
+			#print("la observación es: ", self.obs)
 		else:
 			dlg2.Destroy()
 	else:
 		pass
+
+
+#función para enviar el foco y sonar.
+def foco_so(self):
+	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
+	self.lista.SetFocus()
 
 #creo la clase.
 class Base():
@@ -95,9 +100,8 @@ class Base():
 		
 		for usu in self.num_faltas:
 			self.lista.Append("TEL: {} {} {} Fecha: {} Total faltas: {} OBservaciones: {}".format(str(self.mi[1]), str(self.mi[2]), usu[-2], usu[-3], len(self.num_faltas), usu[-1]))
-		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 		self.text1.SetLabel("")
-		self.lista.SetFocus()
+		foco_so(self)
 	
 		
 	@co
@@ -127,9 +131,7 @@ class Base():
 			self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 			u = self.cursor.fetchall()
 			self.lista.Append("TEL: {} {} Fecha de ingreso: {} Número de faltas: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u), str(i[-1])))
-		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
-
-		self.lista.SetFocus()
+		foco_so(self)
 	
 	#método para eliminar miembros.
 	@co
@@ -166,8 +168,7 @@ class Base():
 			u_el = self.cursor.fetchall()
 
 			self.lista.Append("TEL {} {} fecha eliminación: {} veces eliminado {} Observaciones: {}".format(str(el[1]), el[2], el[-2], len(u_el), el[-1]))
-		winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
-		self.lista.SetFocus()
+		foco_so(self)
 
 	
 	#método para editar número de teléfono.
@@ -187,10 +188,8 @@ class Base():
 			self.cursor.execute("update miembros set tlf = {} where tlf = {}".format(n_tlf, self.it_tlf[1]))
 			self.cursor.execute("update faltas set n_faltas = {} where n_faltas = {}".format(n_tlf, self.it_tlf[1]))
 			self.cursor.execute("update eliminados set tlf_el = {} where tlf_el = {}".format(n_tlf, self.it_tlf[1]))
-
 			self.conexion.commit()
-			print("se cambió el número de teléfono con éxito")
-	
+			
 	#método para editar el nombre de un miembro.
 	@co
 	def editar_nombre(self):
@@ -203,7 +202,6 @@ class Base():
 		else:
 			dlg2.Destroy()
 		
-	
 	#método para editar observaciones.
 	@co
 	def editar_obs(self):
