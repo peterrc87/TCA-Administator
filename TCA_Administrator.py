@@ -181,6 +181,13 @@ class TCA_admin(wx.Frame):
 		self.lista.Enable()
 		self.lista.Clear()
 		to.buscar_fal(self)
+	
+	#método que llama a la función para buscar en tabla eliminados.
+	def buscar_el(self, event):
+		self.lista.Enable()
+		self.lista.Clear()
+		to.buscar_el(self)
+
 if __name__ == "__main__":
 	root= wx.App()
 	TCA_admin(None, "TCA Administrador de Grupos {} Beta 09".format(version))

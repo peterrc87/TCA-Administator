@@ -104,3 +104,14 @@ def buscar_fal(self):
 		self.lista.Append("TEL: {} {} Fecha de falta: {} Falta aplicada por: {} Observación: {}".format(i[1], i[0], i[2], i[3], i[-1]))
 	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 	self.lista.SetFocus()
+
+#función para buscar en tabla eliminados.
+@co
+def buscar_el(self):
+	texto_b(self)
+	self.cursor.execute("select * from eliminados where nombre_el like '%{}%'".format(self.t_bus))
+	todos_el = self.cursor.fetchall()
+	for i in todos_el:
+		self.lista.Append("TEL: {} {} Fecha de eliminación: {} Observación: {}".format(i[1], i[2], i[3], i[-1]))
+	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
+	self.lista.SetFocus()

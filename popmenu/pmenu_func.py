@@ -51,6 +51,7 @@ def create_menubar(self):
 	m_buscar = wx.Menu()
 	
 	it_bus_el = m_buscar.Append(-1, "En tabla eliminados")
+	self.Bind(wx.EVT_MENU, self.buscar_el, it_bus_el)
 	it_bus_fal = m_buscar.Append(-1, "en tabla faltas")
 	self.Bind(wx.EVT_MENU, self.buscar_fal, it_bus_fal)
 	it_bus_mi = m_buscar.Append(-1, "En tabla miembros")
