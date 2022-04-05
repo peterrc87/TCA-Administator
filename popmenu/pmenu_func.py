@@ -55,6 +55,7 @@ def create_menubar(self):
 	it_bus_fal = m_buscar.Append(-1, "en tabla faltas")
 	self.Bind(wx.EVT_MENU, self.buscar_fal, it_bus_fal)
 	it_bus_mi = m_buscar.Append(-1, "En tabla miembros")
+	self.Bind(wx.EVT_MENU, self.buscar_mi, it_bus_mi)
 	
 	menubar.Append(m_archivo, "&Archivo")
 	menubar.Append(m_buscar, "&Buscar 🔎")

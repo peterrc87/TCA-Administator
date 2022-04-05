@@ -115,3 +115,15 @@ def buscar_el(self):
 		self.lista.Append("TEL: {} {} Fecha de eliminación: {} Observación: {}".format(i[1], i[2], i[3], i[-1]))
 	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
 	self.lista.SetFocus()
+
+
+#función para buscar en la tabla miembros.
+@co
+def buscar_mi(self):
+	texto_b(self)
+	self.cursor.execute("select * from miembros where nombre like '%{}%'".format(self.t_bus))
+	todos_mi = self.cursor.fetchall()
+	for i in todos_mi:
+		self.lista.Append("TEL: {} {} Fecha de ingreso: {} Observación: {}".format(i[1], i[2], i[3], i[-1]))
+	winsound.PlaySound("waves/mos.wav", winsound.SND_FILENAME)
+	self.lista.SetFocus()

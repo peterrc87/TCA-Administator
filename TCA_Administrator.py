@@ -187,6 +187,13 @@ class TCA_admin(wx.Frame):
 		self.lista.Enable()
 		self.lista.Clear()
 		to.buscar_el(self)
+	
+	#método para llamar a la función buscar en tabla miembros.
+	def buscar_mi(self, event):
+		self.lista.Enable()
+		self.lista.Clear()
+		to.buscar_mi(self)
+
 
 if __name__ == "__main__":
 	root= wx.App()
