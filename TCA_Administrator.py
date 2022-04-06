@@ -6,6 +6,7 @@ version="1.0"
 from crea_base import class_base as tb 
 from popmenu import pmenu_func as tm
 from tools import tools_func as to 
+from deco.deco_func import clear_lt
 
 class TCA_admin(wx.Frame):
 	def __init__(self, parent, title):
@@ -71,27 +72,25 @@ class TCA_admin(wx.Frame):
 		return self.it_tlf[1]
 	def on_cho_a(self, event):
 		self.it_cho_a = self.cho_a.GetStringSelection()
-		print("el administrador es: {}".format(self.it_cho_a))
+		
+	#método para llamar a la función que agrega un miembro a la base de datos.
 	def añadir_base(self, event, *args):
 		if self.text1.GetValue() != "" and self.text2.GetValue() != "":
 			tb.Base.agregar(self)
 			self.lista.Clear()
-			#self.lista.Enable()
 			tb.Base.mostrar_tm(self)
-
 		else:
 			wx.MessageBox("Debe ingresar un número de teléfono, y un nombre de integrante para añadir un miembro", "Atención faltan datos")
 	
 	#método para mostrar miembros con faltas.
+	@clear_lt
 	def mostrar(self, event):
 		if self.text1.GetValue() != "":			
-			self.lista.Enable()
-			self.lista.Clear()
 			tb.Base.mostrar_f(self)
 		else:
 			wx.MessageBox("Debe ingresar un número de teléfono, para consultar las faltas", "Atención falta el teléfono")
 	
-	
+	#Método que llama a la función para poner una falta.
 	def añadir_falta(self, event):
 		if self.text1.GetValue() != "" and self.it_cho_a != None:
 			tb.contar_f(self)
@@ -101,15 +100,9 @@ class TCA_admin(wx.Frame):
 				tb.Base.faltas(self)
 		else:
 			wx.MessageBox("Debe escoger un administrador, e ingresar un número de teléfono válido, para añadir una falta.",  "Atentción faltan opciones")
-	
-		
-
-		
 			
-
 	#método para el poppup1 
 	def ac_menu(self, event):
-		
 		ps = self.bt2.GetPosition()
 		self.PopupMenu(self.p_menu, ps)		
 		
@@ -119,9 +112,8 @@ class TCA_admin(wx.Frame):
 		self.PopupMenu(self.p2_menu, ps2)
 	
 	#método para mostrar todos los miembros.
+	@clear_lt
 	def mostrar_tm(self, event):
-		self.lista.Clear()
-		self.lista.Enable()
 		tb.Base.mostrar_tm(self)
 
 	#método llamar al menú de contexto.
@@ -133,7 +125,6 @@ class TCA_admin(wx.Frame):
 	def elimina(self, event):
 		tb.Base.eliminar(self)
 		self.lista.Clear()
-		#self.lista.Enable()
 		tb.Base.mostrar_tm(self)
 
 	#método que llama al copiado del teléfono.
@@ -141,9 +132,8 @@ class TCA_admin(wx.Frame):
 		tb.Base.copyclipboard_pg(self)
 
 	#método para llamar a la función mostrar eliminados.
+	@clear_lt
 	def muestra_el(self, event):
-		self.lista.Clear()
-		self.lista.Enable()
 		tb.Base.muestra_el(self)
 
 	#método para llamar a la función que cambia el número de teléfono.
@@ -177,21 +167,18 @@ class TCA_admin(wx.Frame):
 		to.ex_eliminados(self)
 	
 	#método que llama a la función buscar en la tabla faltas.
+	@clear_lt
 	def buscar_fal(self, event):
-		self.lista.Enable()
-		self.lista.Clear()
 		to.buscar_fal(self)
 	
 	#método que llama a la función para buscar en tabla eliminados.
+	@clear_lt
 	def buscar_el(self, event):
-		self.lista.Enable()
-		self.lista.Clear()
 		to.buscar_el(self)
 	
 	#método para llamar a la función buscar en tabla miembros.
+	@clear_lt
 	def buscar_mi(self, event):
-		self.lista.Enable()
-		self.lista.Clear()
 		to.buscar_mi(self)
 
 

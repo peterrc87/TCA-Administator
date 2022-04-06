@@ -2,7 +2,7 @@
 import sqlite3
 import winsound
 import locale, datetime
-from crea_base.class_base import co, foco_so
+from deco.deco_func import co, foco_so
 locale.setlocale(locale.LC_ALL, "es")
 
 #ffunción para guardar el archivo.
@@ -16,26 +16,23 @@ def descargar_co(self):
 		self.ruta_f = self.ruta+"\{}.txt".format(self.filename)
 	return self.ruta_f, self.filename
 
-
 #método para exportar los miembros.
 @co
 def exp_miembros(self):
 	dt=datetime.datetime.now()
-	descargar_co(self)
-	
+	descargar_co(self)	
 	self.cursor.execute("select * from miembros")
 	t_mi = self.cursor.fetchall()
 	
 	f = open(self.ruta_f, "a")
 	f.write("TCAAdministrator 1.0 Informe de miembros \n Fecha de informe: {}\n Total miembros en la base de datos: {}\n Lista de miembros:".format(dt.strftime("%A %d %B %Y Hora: %H:%M"), len(t_mi)))
 	f.close()
-	print("se creó el informe")
+	#print("se creó el informe")
 	for i in t_mi:
 		self.cursor.execute("select * from faltas where n_faltas={}".format(i[1]))
 		u = self.cursor.fetchall()
 		with open(self.ruta_f, "a") as fichero:
-			fichero.write("\n TEL: {} {} Fecha de ingreso: {} Número de faltas: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u), str(i[-1])))
-		
+			fichero.write("\n TEL: {} {} Fecha de ingreso: {} Número de faltas: {} Observaciones: {}".format(str(i[1]), str(i[2]), str(i[-2]), len(u), str(i[-1])))	
 	winsound.PlaySound("waves/te.wav", winsound.SND_FILENAME)
 	
 #método para exportar los miembros con faltas.
@@ -47,7 +44,6 @@ def ex_faltas(self):
 	self.cursor.execute("select miembros.tlf, miembros.nombre, faltas.fecha, faltas.admin, faltas.obs_fal from faltas left join miembros on miembros.tlf = faltas.n_faltas")
 
 	total_f = self.cursor.fetchall()
-	
 	f = open(self.ruta_f, "a")
 	f.write("TCAAdministrator 1.0 Informe de miembros con faltas \n Fecha de informe: {}\n Total miembros con faltas: {}\n Lista de miembros con faltas:".format(dt.strftime("%A %d %B %Y Hora: %H:%M"), len(total_f)))
 	f.close()
