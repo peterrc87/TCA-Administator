@@ -1,5 +1,8 @@
 ﻿import wx
-import sqlite3, winsound
+import sqlite3
+import winsound
+import datetime, locale
+locale.setlocale(locale.LC_ALL, "es")
 
 #funciones decoradoras.
 

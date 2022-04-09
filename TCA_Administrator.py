@@ -2,7 +2,7 @@
 import sqlite3
 import wx
 import os, winsound 
-version="1.0"
+version="1.01"
 from crea_base import class_base as tb 
 from popmenu import pmenu_func as tm
 from tools import tools_func as to 
